@@ -8,6 +8,7 @@
  */
 
 require "controller/navigation.php";
+require "controller/users.php";
 
 if (isset($_GET['action'])) {
     $action = $_GET['action'];

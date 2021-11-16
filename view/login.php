@@ -3,8 +3,8 @@
  * @file      login.php
  * @brief     This view is designed to display the login page
  * @author    Created by Jeffrey.MVUTU-MABILAMA
- * @author    Updated by Nicolas.GLASSEY
- * @version   16-NOV-2021
+ * @version   2021.11.16
+ * @date      2021.11.16
  */
 
 
@@ -12,8 +12,23 @@ ob_start();
 $title = "SnowPoint . Login";
 
 ?>
-<div class="col-md-12 p-b-30">
-					<form class="leave-comment">
+
+    <!-- Title Page -->
+<!--    <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(content/view/images/heading-pages-06.jpg);">-->
+    <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(view/content/images/heading-pages-06.jpg);">
+        <h2 class="l-text2 t-center">
+            Login
+        </h2>
+    </section>
+
+
+    <!-- content page -->
+    <section class="bgwhite p-t-66 p-b-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 p-b-30">
+                    <?php /* MVC : returning to the router, which will then direct to controller */ ?>
+					<form action="view/login.php" class="leave-comment">
 						<h4 class="m-text26 p-b-36 p-t-15">
 Connectez-vous
 						</h4>
@@ -30,6 +45,9 @@ Connectez-vous
 
 					</form>
 				</div>
+            </div>
+        </div>
+    </section>
 
 <?php
 $content = ob_get_clean();

@@ -21,16 +21,6 @@ function home()
 
 
 /**
- * @brief This function is designed to redirect the user to the login page (depending on the action received by the index)
- */
-function login()
-{
-    require "view/login.php";
-}
-
-
-
-/**
  * @brief This function is designed to inform the user that the resource requested doesn't exist (i. e. if the user modify the url manually)
  */
 function lost()
