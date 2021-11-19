@@ -28,7 +28,7 @@ $title = "SnowPoint . Login";
             <div class="row">
                 <div class="col-md-12 p-b-30">
                     <?php /* MVC : returning to the router, which will then direct to controller */ ?>
-					<form action="view/login.php" class="leave-comment">
+					<form action="index.php?action=login" class="leave-comment" method="post">
 						<h4 class="m-text26 p-b-36 p-t-15">
 Connectez-vous
 						</h4>
@@ -51,5 +51,5 @@ Connectez-vous
 
 <?php
 $content = ob_get_clean();
-require "view/gabarit.php";
+require "gabarit.php";
 ?>

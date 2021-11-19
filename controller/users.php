@@ -15,5 +15,32 @@
  */
 function login()
 {
-    require "view/login.php";
+    $data = $_POST;
+    $email = $data["email"];
+    $pwd = $data["userPswd"];
+
+    // coming from the login page (with authentication credentials)
+    if (isset($email)) {
+        $credentialsComplete = false;
+        if (!isset($pwd)) {
+            $credentialsComplete = true;
+        }
+
+        require_once "model/userMgt.php";
+        $credentialsMatch = $credentialsComplete ? checkLogin($email, $pwd) : false;
+
+        if ($credentialsComplete) {
+            if ($credentialsMatch) {
+                $_SESSION["logged"] = true;
+            }
+            require "view/home.php";
+            return;
+        } else {
+            // show error message because user has not entered all the informations
+        }
+
+        require "view/home.php";
+    } else {
+        require "view/login.php";
+    }
 }

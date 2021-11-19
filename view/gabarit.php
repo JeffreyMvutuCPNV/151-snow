@@ -87,6 +87,16 @@
 
                     </ul>
                 </nav>
+
+<!--                TODO: mettre l icone de l utilisateur connecté ou son email.  -->
+                <div>
+                    <?php
+                        if ($_SESSION["logged"]) {
+                            echo $_SESSION["email"];
+                        }
+                    ?>
+                </div>
+
             </div>
 
 
