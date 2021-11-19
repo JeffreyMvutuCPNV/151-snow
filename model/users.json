@@ -2,11 +2,11 @@
 	"logins": [
 		{
 			"login": "nithujan@gmail.com",
-			"pwd": "1a2b3c4d5e;"
+			"pwd": "123"
 		},
 		{
 			"login": "jeffrey@gmail.com",
-			"pwd": "2b3c4d5e;1a"
+			"pwd": "456"
 		},
 		{
 			"login": "florian@gmail.com",

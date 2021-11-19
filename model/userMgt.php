@@ -9,20 +9,23 @@
  * @date      16.11.2021
  */
 
+
+require_once "utils/utils.php";
+
+
 function checkLogin($email, $pwd) : bool {
     // read the JSON of users or the database
     // if the credentials match
         // then logged. say yes
     //otherwise, not logged. Say false
+    $filepath = "model/users.json";
 
-    $fex = file_exists("users.json");
-    $content = file_get_contents("users.json");
+    $content = file_get_contents($filepath);
     if ($content) {
         $data = json_decode($content, true);
-        $credentials = isset($data["logins"]);
+        $credentials = $data["logins"] ?? array();
 
-
-        foreach ($data as $cred) {
+        foreach ($credentials as $cred) {
             $login = $cred["login"];
             $pass = $cred["pwd"];
             if ($email == $login) {
@@ -40,4 +43,4 @@ function checkLogin($email, $pwd) : bool {
     fclose($fh);
     */
 }
- 
+

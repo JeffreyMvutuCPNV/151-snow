@@ -9,6 +9,7 @@
  * @date      16.11.2021
  */
 
+require_once "model/userMgt.php";
 
 /**
  * @brief This function is designed to redirect the user to the login page (depending on the action received by the index)
@@ -22,24 +23,30 @@ function login()
     // coming from the login page (with authentication credentials)
     if (isset($email)) {
         $credentialsComplete = false;
-        if (!isset($pwd)) {
+        if (isset($pwd)) {
             $credentialsComplete = true;
         }
 
-        require_once "model/userMgt.php";
-        $credentialsMatch = $credentialsComplete ? checkLogin($email, $pwd) : false;
-
         if ($credentialsComplete) {
+            $email = sanitize_db_input($email);
+            $pwd = sanitize_db_input($pwd);
+
+            $credentialsMatch = $credentialsComplete ? checkLogin($email, $pwd) : false;
             if ($credentialsMatch) {
                 $_SESSION["logged"] = true;
+                $_SESSION["email"] = $email;
+                require "view/home.php";
+            } else {
+                $loginError = true;
+                require "view/login.php";
             }
-            require "view/home.php";
             return;
         } else {
-            // show error message because user has not entered all the informations
-        }
+            // TODO : show error message because user has not entered all the informations
+            $loginError = true;
 
-        require "view/home.php";
+            require "view/login.php";
+        }
     } else {
         require "view/login.php";
     }

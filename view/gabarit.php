@@ -88,15 +88,16 @@
                     </ul>
                 </nav>
 
-<!--                TODO: mettre l icone de l utilisateur connecté ou son email.  -->
-                <div>
-                    <?php
-                        if ($_SESSION["logged"]) {
-                            echo $_SESSION["email"];
-                        }
-                    ?>
-                </div>
 
+            </div>
+            <div>
+                <!--  TODO: mettre l icone de l utilisateur connecté ou son email.  -->
+                <?php
+                if ($_SESSION["logged"] ?? null) {
+                    echo $_SESSION["email"];
+                }
+                ?>
+                --ui-test@user.com--
             </div>
 
 

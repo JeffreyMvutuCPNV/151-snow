@@ -32,6 +32,11 @@ $title = "SnowPoint . Login";
 						<h4 class="m-text26 p-b-36 p-t-15">
 Connectez-vous
 						</h4>
+                        <?php
+                            if (isset($loginError) && $loginError) {
+                                echo "<div>Erreur de login</div>";
+                            }
+                        ?>
 
 						<div class="bo4 of-hidden size15 m-b-20">
 							<input class="sizefull s-text7 p-l-22 p-r-22" type="email" name="email" placeholder="Adresse email">
