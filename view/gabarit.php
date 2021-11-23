@@ -62,8 +62,21 @@
 
             <span class="topbar-child1">
 					Livraison gratuite dès 200.-
-				</span>
+            </span>
 
+            <div class="topbar-child2">
+					<span class="topbar-email">
+
+                        <!--  TODO: mettre l icone de l utilisateur connecté ou son email.  -->
+                        <?php
+                        if ($_SESSION["logged"] ?? null) {
+                            echo $_SESSION["email"];
+                        }
+                        ?>
+                        <!--    pascal.benzonana@cpnv.ch  -->
+
+					</span>
+            </div>
 
         </div>
 
@@ -81,23 +94,21 @@
                             <a href="index.php">Accueil</a>
                         </li>
 
-                        <li>
-                            <a href="index.php?action=login">Login</a>
-                        </li>
+
+                        <?php if ($_SESSION["logged"] ?? null) { ?>
+                            <li>
+                                <a href="index.php?action=logout">Logout</a>
+                            </li>
+                        <?php } else { ?>
+                            <li>
+                                <a href="index.php?action=login">Login</a>
+                            </li>
+                        <?php } ?>
 
                     </ul>
                 </nav>
 
 
-            </div>
-            <div>
-                <!--  TODO: mettre l icone de l utilisateur connecté ou son email.  -->
-                <?php
-                if ($_SESSION["logged"] ?? null) {
-                    echo $_SESSION["email"];
-                }
-                ?>
-                --ui-test@user.com--
             </div>
 
 
@@ -132,6 +143,16 @@
 						</span>
                 </li>
 
+              <?php
+                if ($_SESSION["logged"] ?? null) {
+              ?>
+                <li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
+                    <span class="topbar-child1">
+                        <?php echo $_SESSION["email"]; ?>
+                    </span>
+                </li>
+              <?php } ?>
+
 
                 <li class="item-topbar-mobile p-l-10">
                     <div class="topbar-social-mobile">
@@ -147,9 +168,16 @@
                     <a href="index.php">Accueil</a>
                 </li>
 
-                <li class="item-menu-mobile">
-                    <a href="index.php?action=login">Login</a>
-                </li>
+                <?php if ($_SESSION["logged"] ?? null) { ?>
+                    <li class="item-menu-mobile">
+                        <a href="index.php?action=logout">Logout</a>
+                    </li>
+                <?php } else { ?>
+                    <li class="item-menu-mobile">
+                        <a href="index.php?action=login">Login</a>
+                    </li>
+                <?php } ?>
+
 
             </ul>
         </nav>

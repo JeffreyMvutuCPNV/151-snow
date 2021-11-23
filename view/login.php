@@ -34,7 +34,7 @@ Connectez-vous
 						</h4>
                         <?php
                             if (isset($loginError) && $loginError) {
-                                echo "<div>Erreur de login</div>";
+                                echo "<div class='text-warning'>Erreur de login</div>";
                             }
                         ?>
 

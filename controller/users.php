@@ -16,9 +16,14 @@ require_once "model/userMgt.php";
  */
 function login()
 {
+    if ($_SESSION["email"] ?? null) {
+        require "view/home.php";
+        return;
+    }
+
     $data = $_POST;
-    $email = $data["email"];
-    $pwd = $data["userPswd"];
+    $email = $data["email"] ?? null;
+    $pwd = $data["userPswd"] ?? null;
 
     // coming from the login page (with authentication credentials)
     if (isset($email)) {
@@ -51,3 +56,9 @@ function login()
         require "view/login.php";
     }
 }
+
+function logout() {
+    session_destroy();
+    require "view/home.php";
+}
+
