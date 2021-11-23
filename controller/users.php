@@ -14,14 +14,13 @@ require_once "model/userMgt.php";
 /**
  * @brief This function is designed to redirect the user to the login page (depending on the action received by the index)
  */
-function login()
+function login($data)
 {
     if ($_SESSION["email"] ?? null) {
         require "view/home.php";
         return;
     }
 
-    $data = $_POST;
     $email = $data["email"] ?? null;
     $pwd = $data["userPswd"] ?? null;
 
@@ -43,12 +42,14 @@ function login()
                 require "view/home.php";
             } else {
                 $loginError = true;
+                $loginErrorMsg = "L'email ou le mot de passe est incorrect.";
                 require "view/login.php";
             }
             return;
         } else {
             // TODO : show error message because user has not entered all the informations
             $loginError = true;
+            $loginErrorMsg = "Vous devez spécifier l'email et le mot de passe.";
 
             require "view/login.php";
         }
@@ -58,7 +59,20 @@ function login()
 }
 
 function logout() {
-    session_destroy();
+    session_destroy(); //< takes a refresh before being active. It sends the cookie.
+
+    // Ensure the logout happens immediately.
+    /*
+    unset($_SESSION["logged"]);
+    unset($_SESSION["email"]);
+    */
+    $_SESSION = array();
+
+    // redirect the url
+    // source: https://www.tutorialrepublic.com/faq/how-to-make-a-redirect-in-php.php
+    // source: https://code.tutsplus.com/tutorials/how-to-redirect-with-php--cms-34680
+    header("Location: /index.php", true, 301);
+
     require "view/home.php";
 }
 

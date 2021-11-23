@@ -18,7 +18,8 @@ function checkLogin($email, $pwd) : bool {
     // if the credentials match
         // then logged. say yes
     //otherwise, not logged. Say false
-    $filepath = "model/users.json";
+    $filepath = "C:/Courses/ict-151-php/users.json";
+//    $filepath = "model/users.json";
 
     $content = file_get_contents($filepath);
     if ($content) {
@@ -33,14 +34,7 @@ function checkLogin($email, $pwd) : bool {
                     return true;
             }
         }
-        return false;
-    } else {
-        return false;
     }
-    /*$fh = fopen("users.json");
-    if (reading ok) {
-    }
-    fclose($fh);
-    */
+    return false;
 }
 

@@ -34,16 +34,16 @@ Connectez-vous
 						</h4>
                         <?php
                             if (isset($loginError) && $loginError) {
-                                echo "<div class='text-warning'>Erreur de login</div>";
+                                echo "<div class='text-warning'><span>". ($loginErrorMsg ?? "Erreur de login") . "</span></div>";
                             }
                         ?>
 
 						<div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="email" name="email" placeholder="Adresse email">
+							<input class="sizefull s-text7 p-l-22 p-r-22" type="email" name="email" placeholder="Adresse email" required>
 						</div>
 
 						<div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="password" name="userPswd" placeholder="Mot de passe">
+							<input class="sizefull s-text7 p-l-22 p-r-22" type="password" name="userPswd" placeholder="Mot de passe" required>
 						</div>
 						<input type="submit" value="login" class="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4"><br>
 						<input type="reset" value="Annuler" class="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
