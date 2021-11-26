@@ -11,12 +11,34 @@
 
 
 require_once "utils/utils.php";
-
+require_once "model/dbConnector.php";
 
 function checkLogin($email, $pwd) : bool {
     // read the JSON of users or the database
     // if the credentials match
         // then logged. say yes
+    //otherwise, not logged. Say false
+
+    $queryString = "SELECT userEmailAddress, userHashPsw FROM snows.users WHERE userEmailAddress = :femail AND userHashPsw = :fpass ;";
+    $res = executeQuerySelect($queryString, array(":femail" => $email, ":fpass" => $pwd));
+
+//    $queryString = "SELECT userEmailAddress, userHashPsw FROM snows.users WHERE userEmailAddress = :femail ;";
+//    $res = executeQuerySelect($queryString, array( ":femail" => "pba@cpnv.ch" ));
+    // echo "result: ". $res[0]["userEmailAddress"];
+
+    if ($res) {
+        $entry = $res[0];
+        if ($email == $entry["userEmailAddress"] && $pwd == $entry["userHashPsw"]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function checkLoginFromFile($email, $pwd) : bool {
+    // read the JSON of users or the database
+    // if the credentials match
+    // then logged. say yes
     //otherwise, not logged. Say false
     $filepath = "C:/Courses/ict-151-php/users.json";
 //    $filepath = "model/users.json";
@@ -37,4 +59,3 @@ function checkLogin($email, $pwd) : bool {
     }
     return false;
 }
-

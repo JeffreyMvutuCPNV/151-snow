@@ -13,7 +13,7 @@
  * @return PDO|null
  * @remark : http://php.net/manual/en/pdo.construct.php
  */
-function openDBConnexion()
+function openDBConnexion(): PDO
 {
     $tempDBConnexion = null;
 
@@ -29,11 +29,15 @@ function openDBConnexion()
     try {
         $tempDBConnexion = new PDO($dsn, $userName, $userPwd);
     } catch (PDOException $exception) {
-        echo 'Connection failed' . $exception->getMessage();
+        echo 'Connection failed: ' . $exception->getMessage();
 		die();
     }
     return $tempDBConnexion;
 }
+
+// how to use:
+//require 'model/dbConnector.php';
+//print_r( executeQuerySelect("select * from snows.users;", array()) );
 
 /**
  * @brief This function is designed to execute a query received as parameter
@@ -42,23 +46,25 @@ function openDBConnexion()
  * @return array|null
  * @link https://php.net/manual/en/pdo.prepare.php
  */
-function executeQuerySelect($query, $params)
+function executeQuerySelect($query, $params): array
 {
     $queryResult = null;
 
     //open DB Connection
-    $dbConnexion = null;
+    $dbConnexion = openDBConnexion();
 
     //if connection is not null
     if ($dbConnexion != null) {
         //preparation query
+        $stmt = $dbConnexion->prepare($query);
 
         //we execute the request with the parameters used on the query
+        $success = $stmt->execute($params);
 
         //we prepare the results for the navigator
-
-
+        $queryResult = $stmt->fetchAll();
     }
+
     $dbConnexion = null; // Fermeture de ma connection à la BD
     return $queryResult;
 }
