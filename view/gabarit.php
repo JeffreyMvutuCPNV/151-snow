@@ -94,6 +94,9 @@
                             <a href="index.php">Accueil</a>
                         </li>
 
+                        <li>
+                            <a href="index.php?action=articles">Articles</a>
+                        </li>
 
                         <?php if ($_SESSION["logged"] ?? null) { ?>
                             <li>
@@ -166,6 +169,10 @@
 
                 <li class="item-menu-mobile">
                     <a href="index.php">Accueil</a>
+                </li>
+
+                <li class="item-menu-mobile">
+                    <a href="index.php?action=articles">Articles</a>
                 </li>
 
                 <?php if ($_SESSION["logged"] ?? null) { ?>

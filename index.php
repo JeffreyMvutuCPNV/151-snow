@@ -11,12 +11,16 @@ session_start();
 
 require "controller/navigation.php";
 require "controller/users.php";
+require "controller/articles.php";
 
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
     switch ($action) {
         case 'home' :
             home();
+            break;
+        case 'articles' :
+            displayArticlesPage();
             break;
         case 'login' :
             login($_POST);

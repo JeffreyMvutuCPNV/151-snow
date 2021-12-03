@@ -22,8 +22,8 @@ function openDBConnexion(): PDO
     $port = 3306;
     $charset = 'utf8';
     $dbName = 'snows';
-    $userName = '151snow'; //to change
-    $userPwd = 'P@ssw0rd';
+    $userName = 'mvutu'; //to change
+    $userPwd = 'Pa$$w0rd';
     $dsn = $sqlDriver . ':host=' . $hostname . ';dbname=' . $dbName . ';port=' . $port . ';charset=' . $charset;
 
     try {
