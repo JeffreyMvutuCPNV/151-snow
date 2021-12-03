@@ -14,21 +14,16 @@ require_once "utils/utils.php";
 require_once "model/dbConnector.php";
 
 function checkLogin($email, $pwd) : bool {
-    // read the JSON of users or the database
-    // if the credentials match
-        // then logged. say yes
-    //otherwise, not logged. Say false
+    // check the credentials
+    // and check the result
 
-    $queryString = "SELECT userEmailAddress, userHashPsw FROM snows.users WHERE userEmailAddress = :femail AND userHashPsw = :fpass ;";
-    $res = executeQuerySelect($queryString, array(":femail" => $email, ":fpass" => $pwd));
+    $queryString = "SELECT userEmailAddress, userHashPsw FROM snows.users WHERE userEmailAddress = :femail;";
+    $res = executeQuerySelect($queryString, array(":femail" => $email));
 
-//    $queryString = "SELECT userEmailAddress, userHashPsw FROM snows.users WHERE userEmailAddress = :femail ;";
-//    $res = executeQuerySelect($queryString, array( ":femail" => "pba@cpnv.ch" ));
-    // echo "result: ". $res[0]["userEmailAddress"];
-
-    if ($res) {
+    if ($res && count($res) == 1) {
         $entry = $res[0];
-        if ($email == $entry["userEmailAddress"] && $pwd == $entry["userHashPsw"]) {
+        $hash = $entry["userHashPsw"];
+        if (password_verify($pwd, $hash)) {
             return true;
         }
     }
