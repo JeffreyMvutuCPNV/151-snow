@@ -22,12 +22,16 @@ if (isset($_GET['action'])) {
         case 'articles' :
             displayArticlesPage();
             break;
+        case 'article-detail' :
+            displayArticleDetailPage($_GET['artcode']);
+            break;
         case 'login' :
             login($_POST);
             break;
         case 'logout' :
             logout();
             break;
+        case 404:
         default :
             lost();
     }

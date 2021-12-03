@@ -11,6 +11,14 @@
 
 require_once "model/dbConnector.php";
 
+function getArticleFromStorage(string $code) {
+    $query = "SELECT * FROM snows.snows WHERE code = :artcode";
+    $params = array(":artcode" => $code);
+    $result = executeQuerySelect($query, $params);
+    $prod = count($result) >= 1 ? $result[0]:null;
+    return $prod;
+}
+
 function getArticlesFromStorage(int $perPage=0, int $pageNbr=1): array {
 //    $perPage = ($perPage && $perPage >= 1) ? $perPage : 12;
     $pageNbr = ($pageNbr && $pageNbr >= 1) ? $pageNbr : 1;

@@ -22,3 +22,15 @@ function displayArticlesPage()
     require "view/articles.php";
 }
 
+function displayArticleDetailPage(string $code)
+{
+    $product = getArticleFromStorage($code);
+    if ($product) {
+        require "view/article_detail.php";
+        return;
+    }
+    // no product found: display 404
+//    header("Location: http://www.yoursite.com/index.php?action=");
+    header("Location: /index?action=404", true, 301);
+    exit();
+}
