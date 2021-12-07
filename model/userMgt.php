@@ -54,3 +54,24 @@ function checkLoginFromFile($email, $pwd) : bool {
     }
     return false;
 }
+
+function registerNewUser($email, $pwd): bool {
+    // sanitize here if needed ?
+    // model should be the one to ensure its own sanitization mechanism, right ?
+    $validEmail = $email;
+
+    // already a user
+    $queryString = "SELECT userEmailAddress FROM snows.users WHERE userEmailAddress = :femail LIMIT 1;";
+    $res = executeQuerySelect($queryString, array(":femail" => $validEmail));
+
+    // user not created because another user already exists
+    if ($res && count($res) > 0) {
+        return false;
+    }
+
+
+    $hashed = password_hash($pwd, PASSWORD_DEFAULT);
+    $query = "INSERT INTO snows.users (userEmailAddress, userHashPsw) VALUES ('". $validEmail . "', '". $hashed ."');";
+    executeQueryInsert($query);
+    return true;
+}

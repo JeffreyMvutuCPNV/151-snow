@@ -106,6 +106,9 @@
                             <li>
                                 <a href="index.php?action=login">Login</a>
                             </li>
+                            <li>
+                                <a href="index.php?action=signup">S'enregistrer</a>
+                            </li>
                         <?php } ?>
 
                     </ul>
@@ -182,6 +185,9 @@
                 <?php } else { ?>
                     <li class="item-menu-mobile">
                         <a href="index.php?action=login">Login</a>
+                    </li>
+                    <li class="item-menu-mobile">
+                        <a href="index.php?action=signup">S'enregistrer</a>
                     </li>
                 <?php } ?>
 
