@@ -12,7 +12,10 @@
 require_once "model/dbConnector.php";
 
 function getArticleFromStorage(string $code) {
-    $query = "SELECT * FROM snows.snows WHERE code = :artcode";
+    // avoid the * form because a someone maintaining the view might get confused if
+    // they use integer access for some reason (instead of keys)
+    // $query = "SELECT * FROM snows.snows WHERE code = :artcode";
+    $query = "SELECT code,brand,model,price,snowLength,description,descriptionFull,'level',photo FROM snows.snows WHERE code = :artcode";
     $params = array(":artcode" => $code);
     $result = executeQuerySelect($query, $params);
     $prod = count($result) >= 1 ? $result[0]:null;
