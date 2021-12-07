@@ -76,7 +76,12 @@ function executeQuerySelect($query, $params): array
  */
 function executeQueryInsert($query)
 {
+    $dbConnexion = openDBConnexion();
 
+    $result = $dbConnexion->exec($query);
+    $dbConnexion = null;
+
+    return $result;
 }
 
 

@@ -12,7 +12,8 @@
 require_once "model/userMgt.php";
 
 /**
- * @brief This function is designed to redirect the user to the login page (depending on the action received by the index)
+ * @brief This function is designed to log the user in
+ * or display the login form with the errors encountered
  */
 function login($data)
 {
