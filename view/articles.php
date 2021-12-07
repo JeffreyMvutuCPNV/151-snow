@@ -65,7 +65,7 @@ $title = "SnowPoint . Articles";
                                     <div class="block2-btn-addcart w-size1 trans-0-4">
                                         <!-- Button -->
                                         <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                            Add to Cart
+                                            Ajouter au panier
                                         </button>
                                     </div>
                                 </div>
@@ -84,7 +84,9 @@ $title = "SnowPoint . Articles";
                                 </span>
 
                                 <span class="block2-price m-text6 p-r-5">
-                                        <?= number_format($product["price"] / 100, 2) ?> CHF
+                                    <?= $product["price"]; ?>
+                                    <?php // number_format($product["price"] / 100, 2) ?>
+                                    CHF
                                 </span>
                             </div>
                         </div>
