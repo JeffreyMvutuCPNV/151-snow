@@ -58,6 +58,52 @@ function login($data)
     }
 }
 
+function signup($data){
+    // check passwords match
+    // save to DB
+    $error = false;
+    $errorMessages = array();
+
+    $email = $data["email"] ?? "";
+    $password = $data["userPswd"] ?? "";
+    $passwordVerif = $data["userPswdVerify"] ?? "";
+
+    $equal = strcmp($password, $passwordVerif);
+    if ($equal!==0 || !isStrongPassword($password)) {
+        $error = true;
+        array_push($errorMessages, "Les mots de passe de concordent pas.");
+    }
+
+    // email regex according to: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
+    // /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+    $pattern = "/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/";
+    $emailOk = preg_match($pattern, $email);
+
+    if (!$emailOk) {
+        $error = true;
+        array_push($errorMessages, "Ce n'est pas une adresse email valide.");
+    }
+
+    if (!$error) {
+        // quelle erreur retourner ?
+        $addedUser = registerNewUser($email, $password);
+        if ($addedUser) {
+//            http_redirect("/index.php");
+//            header("Location: /index.php", true, 301);
+            login(array("email" => $email, "userPwd" => $password));
+        } else {
+            $msg = 'Un utilisateur est déjà enregistré avec ce nom. Voulez-vous vous <a href="/index.php?action=login">connecter</a> ?';
+            array_push($errorMessages, $msg);
+            $error = true;
+        }
+    }
+    require 'view/signup.php';
+}
+
+function isStrongPassword($passwd): bool {
+    return $passwd !=null && strlen($passwd) >= 3;
+}
+
 function logout() {
     session_destroy(); //< takes a refresh before being active. It sends the cookie.
 
@@ -75,4 +121,3 @@ function logout() {
 
     require "view/home.php";
 }
-
