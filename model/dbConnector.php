@@ -72,9 +72,29 @@ function executeQuerySelect($query, $params): array
 /**
  * @brief This function is designed to insert value in database
  * @param $query
+ * @return bool : whether the query succeeded or not
+ */
+function executeQueryInsert($query, $params): bool
+{
+    $success = false;
+    $dbConnexion = openDBConnexion();
+    if ($dbConnexion != null) {
+        $stmt = $dbConnexion->prepare($query);
+
+        $success = $stmt->execute($params);
+    }
+
+    $dbConnexion = null;
+
+    return $success;
+}
+
+/**
+ * @brief This function is designed to insert value in database
+ * @param $query
  * @return null
  */
-function executeQueryInsert($query)
+function executeQueryInsert_unsafe($query)
 {
     $dbConnexion = openDBConnexion();
 

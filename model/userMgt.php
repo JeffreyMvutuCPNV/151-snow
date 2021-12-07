@@ -71,7 +71,11 @@ function registerNewUser($email, $pwd): bool {
 
 
     $hashed = password_hash($pwd, PASSWORD_DEFAULT);
-    $query = "INSERT INTO snows.users (userEmailAddress, userHashPsw) VALUES ('". $validEmail . "', '". $hashed ."');";
-    executeQueryInsert($query);
-    return true;
+
+//    $query = "INSERT INTO snows.users (userEmailAddress, userHashPsw) VALUES ('". $validEmail . "', '". $hashed ."');";
+//    executeQueryInsert_unsafe($query);
+//    return true;
+
+    $query = "INSERT INTO snows.users (userEmailAddress, userHashPsw) VALUES ( :femail , :fpassword );";
+    return executeQueryInsert($query, array(":femail" => $validEmail, ":fpassword" => $hashed));
 }

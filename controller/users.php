@@ -69,8 +69,17 @@ function signup($data){
     $password = $data["userPswd"] ?? "";
     $passwordVerif = $data["userPswdVerify"] ?? "";
 
+    if (!isset($email) || 0==strcmp($email, "")) {
+        require 'view/signup.php';
+        return;
+    }
+
     $equal = strcmp($password, $passwordVerif);
-    if ($equal!==0 || !isStrongPassword($password)) {
+    if (!isStrongPassword($password)) {
+        $error = true;
+        array_push($errorMessages, "Le mot de passe n'est pas assez robuste. Il faut au moins 3 caractères.");
+    }
+    if ($equal!==0) {
         $error = true;
         array_push($errorMessages, "Les mots de passe de concordent pas.");
     }
@@ -91,7 +100,7 @@ function signup($data){
         if ($addedUser) {
 //            http_redirect("/index.php");
 //            header("Location: /index.php", true, 301);
-            login(array("email" => $email, "userPwd" => $password));
+            login(array("email" => $email, "userPswd" => $password));
         } else {
             $msg = 'Un utilisateur est déjà enregistré avec ce nom. Voulez-vous vous <a href="/index.php?action=login">connecter</a> ?';
             array_push($errorMessages, $msg);

@@ -36,7 +36,7 @@ $title = "SnowPoint . Login";
                         Enregistrez-vous
                     </h4>
                     <?php
-                    if (isset($error)) {
+                    if (isset($error) && $error) {
                         if (!$errorMessages || count($errorMessages) == 0){
                             echo "<div class='text-warning'><span>". "Erreur lors de l'enregistrement" . "</span></div>";
                         } else {
