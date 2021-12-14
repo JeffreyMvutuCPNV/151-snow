@@ -40,6 +40,9 @@ function login($data)
             if ($credentialsMatch) {
                 $_SESSION["logged"] = true;
                 $_SESSION["email"] = $email;
+//                $_SESSION[$kUserIsAdminKey] = userIsAdmin($email); // error: undefined bc variable scoping of globals inside functions
+//                $_SESSION[$GLOBALS['UserIsAdminKey']] = userIsAdmin($email); // error: undefined bc
+                $_SESSION["isAdmin"] = userIsAdmin($email);
                 require "view/home.php";
             } else {
                 $loginError = true;

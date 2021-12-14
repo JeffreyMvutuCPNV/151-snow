@@ -30,6 +30,18 @@ function checkLogin($email, $pwd) : bool {
     return false;
 }
 
+function userIsAdmin($email): bool {
+    $queryString = "SELECT isAdmin FROM snows.users WHERE userEmailAddress = :femail;";
+    $res = executeQuerySelect($queryString, array(":femail" => $email));
+
+    if ($res && count($res) == 1) {
+        $entry = $res[0];
+        $isAdmin = $entry["isAdmin"];
+        return ($isAdmin > 0) || $isAdmin;
+    }
+    return false;
+}
+
 function checkLoginFromFile($email, $pwd) : bool {
     // read the JSON of users or the database
     // if the credentials match

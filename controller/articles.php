@@ -22,6 +22,14 @@ function displayArticlesPage()
     require "view/articles.php";
 }
 
+function displayArticlesAdminPage()
+{
+    $totalProductsCount = getArticlesCount();
+    $productsList = getArticlesFromStorage(0, 0);
+
+    require "view/articles.php";
+}
+
 function displayArticleDetailPage(string $code)
 {
     $product = getArticleFromStorage($code);

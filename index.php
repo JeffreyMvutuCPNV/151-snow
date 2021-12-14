@@ -9,6 +9,8 @@
 
 session_start();
 
+require_once "utils/constants.php";
+
 require "controller/navigation.php";
 require "controller/users.php";
 require "controller/articles.php";
@@ -21,6 +23,9 @@ if (isset($_GET['action'])) {
             break;
         case 'articles' :
             displayArticlesPage();
+            break;
+        case 'articles-admin' :
+            displayArticlesAdminPage();
             break;
         case 'article-detail' :
             displayArticleDetailPage($_GET['artcode']);

@@ -21,25 +21,28 @@ $title = "SnowPoint . Article ". $artTitle;
 
 
 <!-- breadcrumb -->
-<div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
+    <div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
     <a href="/index.php" class="s-text16">
         Home
         <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
     </a>
 
     <a href="/index.php?action=articles" class="s-text16">
-        Women
+        Snowboards
         <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
     </a>
-
+<?php if (false) : ?>
     <a href="#" class="s-text16">
         T-Shirt
         <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
     </a>
+<?php endif; ?>
 
     <span class="s-text17">
-        Boxy T-Shirt with Roll Sleeve Detail
+        <?= $product["brand"] ?>
+        <?= $product["model"] ?>
     </span>
+
 </div>
 
 <!-- Product Detail -->

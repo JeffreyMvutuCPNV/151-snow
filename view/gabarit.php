@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title><?=$title; ?></title>
+    <title><?= $title; ?></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -97,6 +97,17 @@
                         <li>
                             <a href="index.php?action=articles">Articles</a>
                         </li>
+
+                        <?php
+//                        require_once "utils/constants.php";
+//                        if ($_SESSION[$kUserIsAdminKey] ?? null) : // not working (unless include inside function) bc of variable scope of globals inside function.
+//                        if ($_SESSION[$GLOBALS["kUserIsAdminKey"]] ?? null) :
+                        if ($_SESSION["isAdmin"] ?? null) :
+                        ?>
+                        <li>
+                            <a href="index.php?action=gestion">Gestion</a>
+                        </li>
+                        <?php endif; ?>
 
                         <?php if ($_SESSION["logged"] ?? null) { ?>
                             <li>
