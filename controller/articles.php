@@ -27,7 +27,7 @@ function displayArticlesAdminPage()
     $totalProductsCount = getArticlesCount();
     $productsList = getArticlesFromStorage(0, 0);
 
-    require "view/articles.php";
+    require "view/articles_admin.php";
 }
 
 function displayArticleDetailPage(string $code)

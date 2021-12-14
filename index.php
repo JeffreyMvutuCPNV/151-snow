@@ -24,6 +24,7 @@ if (isset($_GET['action'])) {
         case 'articles' :
             displayArticlesPage();
             break;
+//        case 'gestion' :
         case 'articles-admin' :
             displayArticlesAdminPage();
             break;

@@ -105,7 +105,7 @@
                         if ($_SESSION["isAdmin"] ?? null) :
                         ?>
                         <li>
-                            <a href="index.php?action=gestion">Gestion</a>
+                            <a href="index.php?action=articles-admin">Gestion</a>
                         </li>
                         <?php endif; ?>
 
@@ -188,6 +188,14 @@
                 <li class="item-menu-mobile">
                     <a href="index.php?action=articles">Articles</a>
                 </li>
+
+                <?php
+                if ($_SESSION["isAdmin"] ?? null) :
+                ?>
+                <li>
+                    <a href="index.php?action=articles-admin">Gestion</a>
+                </li>
+                <?php endif; ?>
 
                 <?php if ($_SESSION["logged"] ?? null) { ?>
                     <li class="item-menu-mobile">
