@@ -15,10 +15,11 @@ function getArticleFromStorage(string $code) {
     // avoid the * form because a someone maintaining the view might get confused if
     // they use integer access for some reason (instead of keys)
     // $query = "SELECT * FROM snows.snows WHERE code = :artcode";
-    $query = "SELECT code,brand,model,price,snowLength,description,descriptionFull,'level',photo FROM snows.snows WHERE code = :artcode";
+//    $query = "SELECT code,brand,model,price,snowLength,description,descriptionFull,'level',photo FROM snows.snows WHERE code = :artcode";
+    $query = "SELECT code,brand,model,price,snowLength,description,descriptionFull,'level',photo FROM snows.snows WHERE code = :artcode AND deleted=0";
     $params = array(":artcode" => $code);
     $result = executeQuerySelect($query, $params);
-    $prod = count($result) >= 1 ? $result[0]:null;
+    $prod = count($result) >= 1 ? $result[0] : null;
     return $prod;
 }
 
@@ -28,10 +29,12 @@ function getArticlesFromStorage(int $perPage=0, int $pageNbr=1): array {
     $offset = ($pageNbr - 1) * $perPage;
 
     if (!$perPage || $perPage < 1) {
-        $query = "SELECT * FROM snows.snows";
+//        $query = "SELECT * FROM snows.snows";
+        $query = "SELECT * FROM snows.snows WHERE deleted = 0";
         $params = array();
     } else {
-        $query = "SELECT * FROM snows.snows LIMIT :perPage OFFSET :theOffset";
+//        $query = "SELECT * FROM snows.snows LIMIT :perPage OFFSET :theOffset";
+        $query = "SELECT * FROM snows.snows LIMIT :perPage OFFSET :theOffset WHERE deleted = 0";
         $params = array(":perPage" => $perPage, ":theOffset" => $offset);
     }
 
@@ -39,11 +42,18 @@ function getArticlesFromStorage(int $perPage=0, int $pageNbr=1): array {
 }
 
 function getArticlesCount(): int {
-    return executeQuerySelect("SELECT count(id) as nb FROM snows.snows", array())[0]["nb"];
+    return executeQuerySelect("SELECT count(id) as nb FROM snows.snows WHERE deleted=0", array())[0]["nb"];
+//    return executeQuerySelect("SELECT count(id) as nb FROM snows.snows", array())[0]["nb"];
+}
+
+function removeArticle($code): bool {
+//    $query = "DELETE FROM snows.snows WHERE code = :fcode";
+    $query = "UPDATE snows.snows SET deleted=1 WHERE code = :fcode";
+    return executeNonQuery($query, array(":fcode" => $code));
 }
 
 function addNewArticle(array $data): bool {
-    $query = "INSERT INTO snows.snows (code,brand,model,snowLength) VALUES (:fcode , :fbrand , :fmodel , :flength,)";
+    $query = "INSERT INTO snows.snows (code,brand,model,snowLength) VALUES (:code , :brand , :model , :snowlength)";
 
 
 
