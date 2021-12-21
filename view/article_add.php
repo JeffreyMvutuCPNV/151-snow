@@ -32,7 +32,9 @@ $title = "SP . Add Article ";
         <div class="row">
             <div class="col-md-12 p-b-30">
                 <?php /* MVC : returning to the router, which will then direct to controller */ ?>
-                <form action="/index.php?action=article-add" class="leave-comment" method="post">
+                <form action="/index.php?action=article-add" class="leave-comment" method="post"
+                      enctype="multipart/form-data"
+                >
                     <h4 class="m-text26 p-b-36 p-t-15">
                         Nouvel article
                     </h4>

@@ -43,7 +43,7 @@ function displayArticleDetailPage(string $code)
     exit();
 }
 
-function displayArticleAddPage(?array $data=null) {
+function displayArticleAddPage(?array $data=null, ?array $imageInfos=null) {
     if (!canAlterCatalog()){
         // not enough priviledges
         header("Location: /index?action=articles-admin", true, 301);
@@ -53,6 +53,16 @@ function displayArticleAddPage(?array $data=null) {
     if ($data ?? false){
         // There is an article that has been added.
         // we will then redirect the user after saving the new product
+
+        // save picture to temporary place : auto
+        // register the article : ready
+        // if registration successful, then move the file to the destination path.
+        //    or just move it and if error, fix by hand. This is an admin
+
+//        check image file size
+//        check image dimensions
+//        move image file to correct destination
+
         $success = addNewArticle($data);
         if ($success) {
             header("Location: /index?action=articles-admin", true, 301);

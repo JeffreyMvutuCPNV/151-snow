@@ -69,13 +69,15 @@ function executeQuerySelect($query, $params): array
     return $queryResult;
 }
 
+
 /**
- * @brief This function is designed to insert value in database
- * @param $query
+ * @brief This function is designed to help execute queries
+ *        that do not return values from the database
+ * @param string $query : The SQL query
+ * @param array $params : the parameters associated with the query
  * @return bool : whether the query succeeded or not
  */
-function executeQueryInsert($query, $params): bool
-{
+function executeNonQuery(string $query, array $params): bool {
     $success = false;
     $dbConnexion = openDBConnexion();
     if ($dbConnexion != null) {
@@ -87,6 +89,17 @@ function executeQueryInsert($query, $params): bool
     $dbConnexion = null;
 
     return $success;
+}
+
+
+/**
+ * @brief This function is designed to insert value in database
+ * @param $query
+ * @return bool : whether the query succeeded or not
+ */
+function executeQueryInsert($query, $params): bool
+{
+    return executeNonQuery($query, $params);
 }
 
 /**
