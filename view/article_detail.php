@@ -59,14 +59,16 @@ $title = "SnowPoint . Article ". $artTitle;
                 $fullphoto = substr_replace($product['photo'], '', $offset, strlen("_small"));
                 // dirname() as an alternative
                 $fullphoto = is_file($fullphoto) ? $fullphoto : null;
-
-                // TODO : check no file
                 ?>
 
                 <div class="slick3">
                     <div class="item-slick3" data-thumb="<?= $product['photo'] ?>">
                         <div class="wrap-pic-w">
-                            <img src="<?= $fullphoto ?? $product['photo'] ?>" alt="IMG-PRODUCT">
+                            <?php if (is_file($fullphoto)) : ?>
+                                <img src="<?= $fullphoto ?? $product['photo'] ?>" alt="Image of product <?= $product['code'] ?>">
+                            <?php else: ?>
+                                <img src="/view/content/images/no_image_snow.png" alt="No image">
+                            <?php endif; ?>
                         </div>
                     </div>
 

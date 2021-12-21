@@ -48,7 +48,11 @@ $title = "Articles Management";
 							</td>
                             <td class="column-1">
 								<div class="cart-img-product b-rad-4 o-f-hidden">
-									<img src="<?= $product['photo'] ?>" alt="IMG-PRODUCT">
+                                    <?php if (is_file($product['photo'])) : ?>
+                                        <img src="<?= $product['photo'] ?>" alt="Image of product <?= $product['code'] ?>">
+                                    <?php else: ?>
+                                        <img src="/view/content/images/no_image_snow.png" alt="No image">
+                                    <?php endif; ?>
 								</div>
 							</td>
 							<td class="column-2"><?= $product["model"] ?></td>
