@@ -42,3 +42,41 @@ function displayArticleDetailPage(string $code)
     header("Location: /index?action=404", true, 301);
     exit();
 }
+
+function displayArticleAddPage(?array $data=null) {
+    if (!canAlterCatalog()){
+        // not enough priviledges
+        header("Location: /index?action=articles-admin", true, 301);
+        return;
+    }
+
+    if ($data ?? false){
+        // There is an article that has been added.
+        // we will then redirect the user after saving the new product
+        $success = addNewArticle($data);
+        if ($success) {
+            header("Location: /index?action=articles-admin", true, 301);
+        } else {
+            // TODO : show error messages
+            $error = true;
+            $errorMsg = "Certains champs requis sont absents.";
+            require "view/article_add.php";
+        }
+    } else {
+        // there is no article to add to the DB, so we display the
+        require "view/article_add.php";
+    }
+}
+
+function displayArticleEditPage(string $code) {
+    echo "Page displayArticleEditPage under construction ";
+}
+
+function deleteArticle(string $code) {
+    echo "Page deleteArticle under construction ";
+//    require "view/articles_admin.php";
+}
+
+function canAlterCatalog(): bool {
+    return ($_SESSION??array())["isAdmin"] ?? false;
+}

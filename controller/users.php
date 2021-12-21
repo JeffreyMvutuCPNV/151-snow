@@ -9,6 +9,7 @@
  * @date      16.11.2021
  */
 
+require_once "utils/constants.php";
 require_once "model/userMgt.php";
 
 /**

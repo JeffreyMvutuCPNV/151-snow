@@ -31,9 +31,11 @@ $title = "Articles Management";
 							<th class="column-5">Quantité</th>
 							<th class="column-5">
 <!--                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">-->
-                                <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-                                    Ajouter
-                                </button>
+                                <a href="/index.php?action=article-add">
+                                    <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+                                        Ajouter
+                                    </button>
+                                </a>
                             </th>
 						</tr>
 
@@ -54,14 +56,20 @@ $title = "Articles Management";
                             <td class="column-4"><?= $product["price"] ?> CHF</td>
                             <td class="column-5"><?= $product["qtyAvailable"] ?></td>
                             <td class="column-6">
-                                <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-                                    Editer
-                                </button>
+                                <a href="/index.php?action=article-edit">
+                                    <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+                                        éditer
+                                    </button>
+                                </a>
                                 <br>
-                                <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-                                    Effacer
-                                </button>
-
+                                <?php $msgConfirmDelete = "Are you sure you want to delete article ".$product["brand"]." ".$product["model"]." ?" ?>
+                                <form action="/index.php?action=article-delete" method="POST" onsubmit="return confirm ('<?= $msgConfirmDelete ?>')">
+<!--                                    <a href="/index.php?action=article-add">-->
+                                        <button type="submit" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+                                            Effacer
+                                        </button>
+<!--                                    </a>-->
+                                </form>
                             </td>
 						</tr>
 

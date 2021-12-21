@@ -84,8 +84,8 @@ $title = "SnowPoint . Articles";
                                 </span>
 
                                 <span class="block2-price m-text6 p-r-5">
-                                    <?= $product["price"]; ?>
-                                    <?php // number_format($product["price"] / 100, 2) ?>
+                                    <?php //= $product["price"]; ?>
+                                    <?= number_format($product["price"], 2, '.') ?>
                                     CHF
                                 </span>
                             </div>

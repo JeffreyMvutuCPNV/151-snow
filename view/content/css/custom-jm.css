@@ -1,0 +1,16 @@
+
+.resize-both {
+    resize: both;
+}
+
+.resize-v {
+    resize: vertical;
+}
+
+.resize-h {
+    resize: horizontal;
+}
+
+.resize-no {
+    resize: none;
+}

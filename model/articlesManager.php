@@ -41,3 +41,20 @@ function getArticlesFromStorage(int $perPage=0, int $pageNbr=1): array {
 function getArticlesCount(): int {
     return executeQuerySelect("SELECT count(id) as nb FROM snows.snows", array())[0]["nb"];
 }
+
+function addNewArticle(array $data): bool {
+    $query = "INSERT INTO snows.snows (code,brand,model,snowLength) VALUES (:fcode , :fbrand , :fmodel , :flength,)";
+
+
+
+    // TODO : update
+    return false;
+}
+
+function _checkHasRequiredArticleFields(array $values, array $expectedKeys): bool {
+    foreach ($expectedKeys as $key) {
+        if (!array_key_exists($key, $values))
+            return false;
+    }
+    return true;
+}

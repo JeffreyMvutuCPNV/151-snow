@@ -59,6 +59,8 @@ $title = "SnowPoint . Article ". $artTitle;
                 $fullphoto = substr_replace($product['photo'], '', $offset, strlen("_small"));
                 // dirname() as an alternative
                 $fullphoto = is_file($fullphoto) ? $fullphoto : null;
+
+                // TODO : check no file
                 ?>
 
                 <div class="slick3">

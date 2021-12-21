@@ -28,6 +28,15 @@ if (isset($_GET['action'])) {
         case 'articles-admin' :
             displayArticlesAdminPage();
             break;
+        case 'article-add' :
+            displayArticleAddPage($_POST);
+            break;
+        case 'article-edit' :
+            displayArticleEditPage($_POST['artcode']??"null");
+            break;
+        case 'article-delete' :
+            deleteArticle($_POST['artcode']??"null");
+            break;
         case 'article-detail' :
             displayArticleDetailPage($_GET['artcode']);
             break;
