@@ -59,17 +59,22 @@ function displayArticleAddPage(?array $data=null, ?array $imageInfos=null) {
         // if registration successful, then move the file to the destination path.
         //    or just move it and if error, fix by hand. This is an admin
 
-//        check image file size
+//        check image file size < 1MB
 //        check image dimensions
+//        check image file type is png or jpeg/jpg
+//        check field "Pour qui" has an accepted value
 //        move image file to correct destination
 
-        $success = addNewArticle($data);
+        $success = imageIsFitting($imageInfos ?? false) && addNewArticle($data);
         if ($success) {
             header("Location: /index?action=articles-admin", true, 301);
         } else {
             // TODO : show error messages
             $error = true;
             $errorMsg = "Certains champs requis sont absents.";
+            if ($imageInfos ?? false) {
+                $errorMsg = "Il n'y a pas d'image, ou celle-ci ne correspond pas aux critères. Veuillez joindre une image de <1MB de type jpg ou png.";
+            }
             require "view/article_add.php";
         }
     } else {
@@ -78,13 +83,51 @@ function displayArticleAddPage(?array $data=null, ?array $imageInfos=null) {
     }
 }
 
-function displayArticleEditPage(string $code) {
+function imageIsFitting(array $imageInfos) {
+    $imageInfos = $imageInfos ? $imageInfos : null;
+
+    $target_dir = "uploads/";
+    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+// Check if image file is a actual image or fake image
+    if(isset($_POST["submit"])) {
+        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+        if($check !== false) {
+            echo "File is an image - " . $check["mime"] . ".";
+            $uploadOk = 1;
+        } else {
+            echo "File is not an image.";
+            $uploadOk = 0;
+        }
+    }
+
+    return false;
+}
+
+function displayArticleEditPage(bool $override, ?array $artdata=null) {
     echo "Page displayArticleEditPage under construction ";
+
+    // if no override: display-only mode
+    //      will display edit screen for this product
+
+    // if there is a product code availabe,
+    //      if there are data about the product being edited ...,
+    //          update the records in BDD with the new infos
+    //      otherwise
+    //          will display edit screen for this product
+    //              the page's fields must be pre-filled with the infos from the BDD
+    
 }
 
 function deleteArticle(string $code) {
-    echo "Page deleteArticle under construction ";
-//    require "view/articles_admin.php";
+    if (removeArticle($code)) {
+        header("Location: /index?action=articles-admin", true, 301);
+        return;
+    }
+    // maybe display an error message
+    echo "Error while trying to delete the article ". $code . ".";
+//    header("Location: /index?action=articles-admin", true, 301);
 }
 
 function canAlterCatalog(): bool {

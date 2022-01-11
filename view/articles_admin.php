@@ -60,7 +60,7 @@ $title = "Articles Management";
                             <td class="column-4"><?= $product["price"] ?> CHF</td>
                             <td class="column-5"><?= $product["qtyAvailable"] ?></td>
                             <td class="column-6">
-                                <a href="/index.php?action=article-edit">
+                                <a href="/index.php?action=article-edit&artcode=<?= $product['code'] ?>">
                                     <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
                                         éditer
                                     </button>
@@ -69,6 +69,7 @@ $title = "Articles Management";
                                 <?php $msgConfirmDelete = "Are you sure you want to delete article ".$product["brand"]." ".$product["model"]." ?" ?>
                                 <form action="/index.php?action=article-delete" method="POST" onsubmit="return confirm ('<?= $msgConfirmDelete ?>')">
 <!--                                    <a href="/index.php?action=article-add">-->
+                                        <input type="hidden" name="artcode" value="<?= $product['code'] ?>">
                                         <button type="submit" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
                                             Effacer
                                         </button>

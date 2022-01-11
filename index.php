@@ -29,13 +29,14 @@ if (isset($_GET['action'])) {
             displayArticlesAdminPage();
             break;
         case 'article-add' :
-            displayArticleAddPage($_POST);
+            displayArticleAddPage($_POST, $_FILES);
             break;
         case 'article-edit' :
-            displayArticleEditPage($_POST['artcode']??"null");
+            displayArticleEditPage($_POST);
             break;
         case 'article-delete' :
-            deleteArticle($_POST['artcode']??"null");
+            if (isset($_POST['artcode']))
+                deleteArticle($_POST['artcode']);
             break;
         case 'article-detail' :
             displayArticleDetailPage($_GET['artcode']);
