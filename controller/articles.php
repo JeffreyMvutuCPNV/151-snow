@@ -105,6 +105,28 @@ function imageIsFitting(array $imageInfos) {
     return false;
 }
 
+function filesize($fileData) {
+    // Check file size
+    // $fileData = $_FILES["fileToUpload"];
+    if ($fileData["size"] > 500000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+    }
+}
+
+function checkFileType($fileData, string $expectedType) : bool {
+    // check file extension
+
+    // check mime type to ensure security
+    // mime_content_type(resource|string $filename): string|false
+
+    return false;
+}
+
+function do_test() {
+
+}
+
 function displayArticleEditPage(bool $override, ?array $artdata=null) {
     echo "Page displayArticleEditPage under construction ";
 
@@ -117,7 +139,7 @@ function displayArticleEditPage(bool $override, ?array $artdata=null) {
     //      otherwise
     //          will display edit screen for this product
     //              the page's fields must be pre-filled with the infos from the BDD
-    
+
 }
 
 function deleteArticle(string $code) {
