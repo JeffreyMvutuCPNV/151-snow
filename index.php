@@ -32,7 +32,7 @@ if (isset($_GET['action'])) {
             displayArticleAddPage($_POST, $_FILES);
             break;
         case 'article-edit' :
-            displayArticleEditPage($_POST);
+            displayArticleEditPage($_GET["artcode"]);
             break;
         case 'article-delete' :
             if (isset($_POST['artcode']))

@@ -45,7 +45,7 @@ function displayArticleDetailPage(string $code)
 
 function displayArticleAddPage(?array $data=null, ?array $imageInfos=null) {
     if (!canAlterCatalog()){
-        // not enough priviledges
+        // not enough priviledges -> redirect
         header("Location: /index?action=articles-admin", true, 301);
         return;
     }
@@ -83,7 +83,16 @@ function displayArticleAddPage(?array $data=null, ?array $imageInfos=null) {
     }
 }
 
-function imageIsFitting(array $imageInfos) {
+function imageIsFitting(array $imageInfos, int $maxSize=-1) {
+    // save picture to temporary place : auto
+
+//        check image file size < 1MB
+//        check image dimensions
+//        check image file type is png or jpeg/jpg
+//        check field "Pour qui" has an accepted value
+//        move image file to correct destination
+
+
     $imageInfos = $imageInfos ? $imageInfos : null;
 
     $target_dir = "uploads/";
@@ -92,9 +101,11 @@ function imageIsFitting(array $imageInfos) {
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 // Check if image file is a actual image or fake image
     if(isset($_POST["submit"])) {
-        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-        if($check !== false) {
-            echo "File is an image - " . $check["mime"] . ".";
+        $sizeInfos = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+        $sizeInfos = $sizeOk;
+        $sizeOk = $maxSize > 0 ? $sizeOk <= $maxSize : true;
+        if($sizeOk) {
+            echo "File is an image - " . $sizeOk["mime"] . ".";
             $uploadOk = 1;
         } else {
             echo "File is not an image.";
@@ -105,7 +116,7 @@ function imageIsFitting(array $imageInfos) {
     return false;
 }
 
-function filesize($fileData) {
+function check_filesize($fileData) {
     // Check file size
     // $fileData = $_FILES["fileToUpload"];
     if ($fileData["size"] > 500000) {
@@ -127,7 +138,7 @@ function do_test() {
 
 }
 
-function displayArticleEditPage(bool $override, ?array $artdata=null) {
+function displayArticleEditPage(string $code) {
     echo "Page displayArticleEditPage under construction ";
 
     // if no override: display-only mode
