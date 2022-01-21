@@ -52,13 +52,17 @@ function removeArticle($code): bool {
     return executeNonQuery($query, array(":fcode" => $code));
 }
 
-function addNewArticle(array $data): bool {
-    $query = "INSERT INTO snows.snows (code,brand,model,snowLength) VALUES (:code , :brand , :model , :snowlength)";
+function addNewArticle(array $data, string $imgpath): bool {
+    // TODO : check whole function
 
+    $query = ("INSERT INTO snows.snows".
+        " (code,brand,model,snowLength, price, qtyAvailable, audience, description, descriptionFull, photo, active, deleted)".
+        " VALUES (:code , :brand , :model , :snowlength , :price , :qtyAvailable , :audience, :description , :descriptionFull, :photo , 1, 0)");
 
+    $data["photo"] = $imgpath;
+    $res = executeQueryInsert($query, $data);
 
-    // TODO : update
-    return false;
+    return $res;
 }
 
 function _checkHasRequiredArticleFields(array $values, array $expectedKeys): bool {

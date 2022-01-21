@@ -65,13 +65,25 @@ function displayArticleAddPage(?array $data=null, ?array $imageInfos=null) {
 //        check field "Pour qui" has an accepted value
 //        move image file to correct destination
 
-        $success = imageIsFitting($imageInfos ?? false) && addNewArticle($data);
+        $theImage = $imageInfos["picture"] ?? array();
+        $success = imageIsFitting($theImage, 1_000_000);
+
+        $target_dir = "view/content/images/custom/"; // destination directory for product pictures
+        $target_file = $target_dir . basename($theImage["name"]);
+        $moved_ok = false;
+        if ($success)
+            $moved_ok = rename($theImage["tmp_name"], $target_file);
+
+        $target_file = $moved_ok ? $target_file : $theImage["tmp_name"];
+
+        $success = $success && addNewArticle($data, $target_file);
+
         if ($success) {
             header("Location: /index?action=articles-admin", true, 301);
         } else {
             // TODO : show error messages
             $error = true;
-            $errorMsg = "Certains champs requis sont absents.";
+            $errorMsg = $errorMsg ?? "Certains champs requis sont absents.";
             if ($imageInfos ?? false) {
                 $errorMsg = "Il n'y a pas d'image, ou celle-ci ne correspond pas aux critères. Veuillez joindre une image de <1MB de type jpg ou png.";
             }
@@ -83,7 +95,7 @@ function displayArticleAddPage(?array $data=null, ?array $imageInfos=null) {
     }
 }
 
-function imageIsFitting(array $imageInfos, int $maxSize=-1) {
+function imageIsFitting(array $imageInfos, int $maxSize=-1): bool {
     // save picture to temporary place : auto
 
 //        check image file size < 1MB
@@ -94,26 +106,43 @@ function imageIsFitting(array $imageInfos, int $maxSize=-1) {
 
 
     $imageInfos = $imageInfos ? $imageInfos : null;
+    if (!$imageInfos)
+        return false;
 
-    $target_dir = "uploads/";
-    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-// Check if image file is a actual image or fake image
-    if(isset($_POST["submit"])) {
-        $sizeInfos = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-        $sizeInfos = $sizeOk;
-        $sizeOk = $maxSize > 0 ? $sizeOk <= $maxSize : true;
-        if($sizeOk) {
-            echo "File is an image - " . $sizeOk["mime"] . ".";
-            $uploadOk = 1;
-        } else {
-            echo "File is not an image.";
-            $uploadOk = 0;
-        }
-    }
+    $target_dir = "view/content/images/custom/"; // destination directory for product pictures
 
-    return false;
+    // file extenstion
+    $target_file = $target_dir . basename($imageInfos["name"]);
+    $imageExtension = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    // $extension = $imageExtension in array("png", "jpg","jpeg", "gif");
+
+    $filepath = $imageInfos["tmp_name"];
+    // Check if image file is a actual image or fake image
+    // $mimeType = mime_content_type($filepath);
+    $mimeType = finfo_file( finfo_open( FILEINFO_MIME_TYPE ), $filepath );
+
+    $allowedFileTypes = ['image/png', 'image/jpeg', 'image/gif'];
+    $isImage = in_array($mimeType, $allowedFileTypes);
+
+    if (!$mimeType || !$isImage)
+        return false;
+
+    $sizeInfos = getimagesize($imageInfos["tmp_name"]);
+    if (!$sizeInfos)
+        return false; // the dimensions cannot be checked
+
+    $width = $sizeInfos[0];
+    $height = $sizeInfos[1];
+    $sizeOk = $width <= 1024 && $height <= 1024;
+    $sizeOk = $maxSize > 0 ? $sizeOk <= $maxSize : true;
+    $uploadOk = $sizeOk;
+//    if($sizeOk) {
+//        echo "File is an image - " . $sizeOk["mime"] . ".";
+//    } else {
+//        echo "File is not an image.";
+//    }
+
+    return isset($uploadOk) && $uploadOk;
 }
 
 function check_filesize($fileData) {

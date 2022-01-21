@@ -97,7 +97,7 @@ $title = "SP . Add Article ";
                     </div>
 
 
-                    <input type="submit" value="Ajouter l'article" class="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4"><br>
+                    <input type="submit" name="submit" value="Ajouter l'article" class="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4"><br>
                     <a href="/index.php?action=articles-admin">
                         <div class="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">Annuler</div>
                         <!-- An input with reset would not allow a redirect (except maybe if overriden prevent default behaviour?) -->
